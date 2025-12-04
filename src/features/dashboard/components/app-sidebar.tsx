@@ -14,10 +14,10 @@ import {
   SquareTerminal,
 } from "lucide-react"
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavSecondary } from "@/components/nav-secondary"
-import { NavUser } from "@/components/nav-user"
+import { NavMain } from "../../dashboard/components/nav-main"
+import { NavProjects } from "../../dashboard/components/nav-projects"
+import { NavSecondary } from "../../dashboard/components/nav-secondary"
+import { NavUser } from "../../dashboard/components/nav-user"
 import {
   Sidebar,
   SidebarContent,
@@ -26,7 +26,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "../../dashboard/components/ui/sidebar"
 
 const data = {
   user: {
@@ -164,7 +164,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <Command className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">CheckIntIN Inc</span>
+                  <span className="truncate font-medium">CheckInt-IN</span>
                   <span className="truncate text-xs">Enterprise</span>
                 </div>
               </a>
