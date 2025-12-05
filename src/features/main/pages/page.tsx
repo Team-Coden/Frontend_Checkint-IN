@@ -1,4 +1,4 @@
-
+import "../../../App.css"
 import { AppSidebar } from "@/features/dashboard/components/app-sidebar"
 import {
   Breadcrumb,
@@ -14,6 +14,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/features/dashboard/components/ui/sidebar"
+import { ModeToggle } from "../components/mode-toggle";
 
 export default function Main({ children }: { children?: React.ReactNode }) {
   return (
@@ -30,7 +31,7 @@ export default function Main({ children }: { children?: React.ReactNode }) {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">
+                  <BreadcrumbLink href="#" className="text-foreground hover:text-foreground">
                     Building Your Application
                   </BreadcrumbLink>
                 </BreadcrumbItem>
@@ -40,6 +41,7 @@ export default function Main({ children }: { children?: React.ReactNode }) {
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
+            <ModeToggle/>
           </div>
         </header>
 
