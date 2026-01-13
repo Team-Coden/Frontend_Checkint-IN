@@ -1,5 +1,5 @@
 import "../../../App.css"
-import { AppSidebar } from "@/features/dashboard/components/app-sidebar"
+import { AppSidebar } from "@/shared/components/app-sidebar"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,16 +7,19 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/features/dashboard/components/ui/breadcrumb"
-import { Separator } from "@/features/dashboard/components/ui/separator"
+} from "@/shared/components/ui/breadcrumb"
+import { Separator } from "@/shared/components/ui/separator"
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/features/dashboard/components/ui/sidebar"
-import { ModeToggle } from "../components/mode-toggle";
+} from "@/shared/components/ui/sidebar"
+import { ModeToggle } from "../components/mode-toggle"
+import { useBreadcrumbs } from "../../../shared/hooks/useBreadcrumbs"   
 
 export default function Main({ children }: { children?: React.ReactNode }) {
+  const breadcrumbs = useBreadcrumbs() 
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -28,20 +31,38 @@ export default function Main({ children }: { children?: React.ReactNode }) {
               orientation="vertical"
               className="mr-2 data-[orientation=vertical]:h-4"
             />
+
             <Breadcrumb>
               <BreadcrumbList>
+
+                {/* Inicio */}
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#" className="text-foreground hover:text-foreground">
-                    Building Your Application
+                  <BreadcrumbLink href="/" className="text-foreground hover:text-foreground">
+                    Inicio
                   </BreadcrumbLink>
                 </BreadcrumbItem>
+
                 <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
+
+                {/* Breadcrumb dinámico */}
+                {breadcrumbs.map((bc, i) => (
+                  <BreadcrumbItem key={i}>
+                    {bc.isLast ? (
+                      <BreadcrumbPage>{bc.label}</BreadcrumbPage>
+                    ) : (
+                      <BreadcrumbLink href={bc.href} className="text-foreground hover:text-foreground">
+                        {bc.label}
+                      </BreadcrumbLink>
+                    )}
+                    {!bc.isLast && <BreadcrumbSeparator />}
+                  </BreadcrumbItem>
+                ))}
+
               </BreadcrumbList>
             </Breadcrumb>
-            <ModeToggle/>
+
+            <div className="grow" />
+            <ModeToggle />
           </div>
         </header>
 
@@ -50,5 +71,5 @@ export default function Main({ children }: { children?: React.ReactNode }) {
         </main>
       </SidebarInset>
     </SidebarProvider>
-  );
+  )
 }

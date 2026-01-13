@@ -1,0 +1,196 @@
+"use client"
+
+import * as React from "react"
+import {
+  FileSearchCorner,
+  Command,
+  LifeBuoy,
+  Send,
+  Settings2,
+  BookMarked,
+  LayoutDashboard,
+  Building2,
+  UserSearch,
+  ClipboardCheck,
+  FileText
+} from "lucide-react"
+
+import { NavMain } from "../components/nav-main"
+import { NavSecondary } from "../components/nav-secondary"
+import { NavUser } from "../components/nav-user"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "./ui/sidebar"
+
+const data = {
+  user: {
+    name: "shadcn",
+    email: "m@example.com",
+    avatar: "/avatars/shadcn.jpg",
+  },
+  navMain: [
+    {
+      title: "Dashboard",
+      url: "/dashboard",
+      icon: LayoutDashboard,
+      isActive: true,
+
+    },
+    {
+      title: "Gestion Academica",
+      url: "#",
+      icon: BookMarked,
+      items: [
+        {
+          title: "Estudiantes",
+          url: "#",
+        },
+        {
+          title: "Talleres",
+          url: "#",
+        },
+        {
+          title: "Tutores",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Gestion Institucional",
+      url: "#",
+      icon: Building2,
+      items: [
+        {
+          title: "Centros de Trabajo",
+          url: "/centroDeTrabajo",
+        },
+        {
+          title: "Plazas",
+          url: "/plaza",
+        },
+        {
+          title: "Tutores",
+          url: "/tutores",
+        },
+      ],
+    },
+    {
+      title: "Roles y Personal",
+      url: "#",
+      icon: UserSearch,
+      items: [
+        {
+          title: "Supervisores",
+          url: "#",
+        },
+        {
+          title: "Vinculadores",
+          url: "#",
+        }
+      ],
+    },
+    {
+      title: "Documentacion",
+      url: "#",
+      icon: FileSearchCorner,
+      items: [
+        {
+          title: "Documentos",
+          url: "/documentos",
+        },
+        {
+          title: "Subir Documentos",
+          url: "/subir",
+        }
+      ],
+    },
+    {
+      title: "Evaluaciones",
+      url: "#",
+      icon: ClipboardCheck,
+      items: [
+        {
+          title: "Evaluaciones",
+          url: "/evaluaciones",
+        },
+        {
+          title: "Calificaciones",
+          url: "/calificaciones",
+        }
+      ],
+    },
+    {
+      title: "Proceso de Pasantias",
+      url: "#",
+      icon: Settings2,
+      items: [
+        {
+          title: "Gestion de Pasantias",
+          url: "#",
+        },
+        {
+          title: "Cierre de Pasantias",
+          url: "/cierrePasantias",
+        },
+        {
+          title: "Enviar Excusas",
+          url: "/excusas",
+        }
+      ],
+    },
+    {
+      title: "Reportes",
+      url: "/reportes",
+      icon: FileText,
+    },
+  ],
+  navSecondary: [
+    {
+      title: "Support",
+      url: "#",
+      icon: LifeBuoy,
+    },
+    {
+      title: "Feedback",
+      url: "#",
+      icon: Send,
+    },
+  ]
+}
+
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  return (
+    <Sidebar variant="inset" {...props}>
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton size="lg" asChild>
+              <a href="#">
+                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+                  <Command className="size-4" />
+                </div>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-medium">CheckInt-IN</span>
+                  <span className="truncate text-xs">Enterprise</span>
+                </div>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+      <SidebarContent>
+        <NavMain items={data.navMain} />
+        <NavSecondary items={data.navSecondary} className="mt-auto" />
+      </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={data.user} />
+      </SidebarFooter>
+    </Sidebar>
+  )
+}

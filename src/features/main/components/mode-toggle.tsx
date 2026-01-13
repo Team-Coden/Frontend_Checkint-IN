@@ -1,13 +1,13 @@
 import { Moon, Sun } from "lucide-react"
 
-import { Button } from "../../dashboard/components/ui/button"
+import { Button } from "../../../shared/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../../dashboard/components/ui/dropdown-menu"
-import { useTheme } from "../../main/hooks/useTheme"
+} from "../../../shared/components/ui/dropdown-menu"
+import { useTheme } from "../components/theme-provider"
 
 export function ModeToggle() {
   const { setTheme } = useTheme()
@@ -15,11 +15,11 @@ export function ModeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon"
-        className="border-border text-foreground hover:bg-accent"
-        >
-          <Sun className="text-foreground h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-          <Moon className="text-foreground absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+        <Button variant="outline" size="icon">
+          {/* El color del icono será heredado del Button, que usa text-foreground/popover-foreground.
+              En modo oscuro, el Moon será blanco sobre el fondo oscuro de la cabecera (bg-background). */}
+          <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+          <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
