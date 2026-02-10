@@ -10,6 +10,7 @@ import {
   Eye,
   Edit,
   Trash2,
+  RotateCcw,
 } from "lucide-react";
 import { Button } from "../../../../shared/components/ui/button";
 import {
@@ -27,6 +28,7 @@ interface Props {
   onView: (plaza: Plaza) => void;
   onEdit: (plaza: Plaza) => void;
   onDelete: (id: number) => void;
+  onRestore: (plaza: Plaza) => void;
 }
 
 const statusStyles: Record<string, string> = {
@@ -35,7 +37,7 @@ const statusStyles: Record<string, string> = {
   Inhabilitada: "bg-gray-100 text-gray-700",
 };
 
-export const PlazaTableRow = ({ plaza, onView, onEdit, onDelete }: Props) => (
+export const PlazaTableRow = ({ plaza, onView, onEdit, onDelete, onRestore }: Props) => (
   <TableRow className="hover:bg-muted/30">
     <TableCell className="font-medium text-primary">{plaza.id}</TableCell>
     <TableCell>
@@ -51,7 +53,6 @@ export const PlazaTableRow = ({ plaza, onView, onEdit, onDelete }: Props) => (
         <Building2 className="h-4 w-4 text-muted-foreground" /> {plaza.centro}
       </div>
     </TableCell>
-    <TableCell>{plaza.titulo}</TableCell>
     <TableCell>
       <div className="flex items-center gap-1.5">
         <UserIcon className="h-3.5 w-3.5 text-muted-foreground" />{" "}
@@ -84,16 +85,35 @@ export const PlazaTableRow = ({ plaza, onView, onEdit, onDelete }: Props) => (
           <DropdownMenuItem onClick={() => onView(plaza)}>
             <Eye className="h-4 w-4 mr-2" /> Ver Detalles
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => onEdit(plaza)}>
-            <Edit className="h-4 w-4 mr-2" /> Editar
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            className="text-destructive"
-            onClick={() => onDelete(plaza.id)}
-          >
-            <Trash2 className="h-4 w-4 mr-2" /> Eliminar
-          </DropdownMenuItem>
+          {plaza.estado !== 'Inhabilitada' && (
+            <DropdownMenuItem onClick={() => onEdit(plaza)}>
+              <Edit className="h-4 w-4 mr-2" /> Editar
+            </DropdownMenuItem>
+          )}
+          {plaza.estado === 'Inhabilitada' ? (
+            <>
+              <DropdownMenuItem onClick={() => onRestore(plaza)} className="text-emerald-600">
+                <RotateCcw className="h-4 w-4 mr-2" /> Restaurar
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="text-destructive"
+                onClick={() => onDelete(plaza.id)}
+              >
+                <Trash2 className="h-4 w-4 mr-2" /> Eliminar Definitivamente
+              </DropdownMenuItem>
+            </>
+          ) : (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="text-destructive"
+                onClick={() => onDelete(plaza.id)}
+              >
+                <Trash2 className="h-4 w-4 mr-2" /> Inhabilitar
+              </DropdownMenuItem>
+            </>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </TableCell>

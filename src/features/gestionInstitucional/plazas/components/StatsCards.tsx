@@ -52,13 +52,13 @@ export const StatsCards = ({ stats }: { stats: PlazaStats }) => {
         </CardContent>
       </Card>
 
-      {/* Cerradas */}
+      {/* Inhabilitadas */}
       <Card className="border bg-card hover:shadow-md transition-shadow">
         <CardContent className="p-5">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Inactivas</p>
-              <p className="text-2xl font-bold text-gray-600 mt-1">{stats.cerradas}</p>
+              <p className="text-sm text-muted-foreground">Inhabilitadas</p>
+              <p className="text-2xl font-bold text-gray-600 mt-1">{stats.inhabilitada}</p>
             </div>
             <div className="p-3 rounded-full bg-gray-100">
               <XCircle className="h-5 w-5 text-gray-600" />

@@ -21,7 +21,7 @@ import {
 } from "../../../../shared/components/ui/alert-dialog"; // Importante: Asegúrate de tener este componente
 import { Button } from "../../../../shared/components/ui/button";
 
-import { Briefcase, Eye, Edit, Building2, User, Calendar, Wrench, Trash2 } from "lucide-react";
+import { Briefcase, Eye, Edit, Building2, User, Calendar, Wrench, RotateCcw, Trash2 } from "lucide-react";
 import type { Plaza,  CreatePlazaData } from "../types";
 import { PlazaForm } from "./PlazaForm";
 
@@ -257,24 +257,42 @@ export const DeletePlazaDialog = ({
   onOpenChange,
   onConfirm,
   plazaNombre,
+  isInhabilitada = false,
 }: {
   open: boolean;
   onOpenChange: (o: boolean) => void;
   onConfirm: () => void;
   plazaNombre?: string;
+  isInhabilitada?: boolean;
 }) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="flex items-center gap-2 text-destructive">
-            <Trash2 className="h-5 w-5" /> ¿Confirmar eliminación?
+          <AlertDialogTitle className={`flex items-center gap-2 ${isInhabilitada ? 'text-red-600' : 'text-orange-600'}`}>
+            {isInhabilitada ? (
+              <><Trash2 className="h-5 w-5" /> ¿Confirmar eliminación definitiva?</>
+            ) : (
+              <><RotateCcw className="h-5 w-5" /> ¿Confirmar inhabilitación?</>
+            )}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            ¿Estás seguro de que deseas eliminar la plaza 
-            <span className="font-bold text-foreground italic"> "{plazaNombre}"</span>?
-            <br /><br />
-            Esta acción es irreversible y eliminara todos los registros asociados.
+            {isInhabilitada ? (
+              <>
+                ¿Estás seguro de que deseas eliminar definitivamente la plaza 
+                <span className="font-bold text-foreground italic"> "{plazaNombre}"</span>?
+                <br /><br />
+                <strong className="text-destructive">Esta acción es irreversible y eliminará permanentemente todos los registros asociados.</strong>
+              </>
+            ) : (
+              <>
+                ¿Estás seguro de que deseas inhabilitar la plaza 
+                <span className="font-bold text-foreground italic"> "{plazaNombre}"</span>?
+                <br /><br />
+                La plaza cambiará su estado a "Inhabilitada" y no aparecerá en las búsquedas habituales. 
+                Podrás restaurarla más tarde si es necesario.
+              </>
+            )}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -283,9 +301,9 @@ export const DeletePlazaDialog = ({
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={onConfirm}
-            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            className={isInhabilitada ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90' : 'bg-orange-600 text-white hover:bg-orange-700'}
           >
-            Eliminar Plaza
+            {isInhabilitada ? 'Eliminar Definitivamente' : 'Inhabilitar Plaza'}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
