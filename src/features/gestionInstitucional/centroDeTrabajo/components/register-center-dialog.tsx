@@ -1,7 +1,5 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import {
   Dialog,
@@ -14,15 +12,16 @@ import {
 import { Button } from "../../../../shared/components/ui/button"
 import { Input } from "../../../../shared/components/ui/input"
 import { Label } from "../../../../shared/components/ui/label"
-import { Textarea } from "../../../../shared/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../../shared/components/ui/select"
+import type { CentroTrabajo } from "../types"
 
 interface RegisterCenterDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
+  onAddCentro?: (centro: Omit<CentroTrabajo, "id" | "createdAt">) => void
 }
 
-export function RegisterCenterDialog({ open, onOpenChange }: RegisterCenterDialogProps) {
+export function RegisterCenterDialog({ open, onOpenChange, onAddCentro }: RegisterCenterDialogProps) {
   const [formData, setFormData] = useState({
     nombre: "",
     codigo: "",
@@ -36,8 +35,17 @@ export function RegisterCenterDialog({ open, onOpenChange }: RegisterCenterDialo
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("[v0] Registrando nuevo centro:", formData)
-    // Aquí iría la lógica para guardar el centro
+    
+    if (onAddCentro) {
+      onAddCentro({
+        name: formData.nombre,
+        location: formData.ubicacion,
+        employees: 1, // Valor mínimo por defecto
+        status: "pending",
+        validated: false,
+      })
+    }
+    
     onOpenChange(false)
     // Reset form
     setFormData({
@@ -110,52 +118,6 @@ export function RegisterCenterDialog({ open, onOpenChange }: RegisterCenterDialo
                   <SelectItem value="distribucion">Distribución</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="responsable">Responsable *</Label>
-              <Input
-                id="responsable"
-                required
-                placeholder="Nombre del responsable"
-                value={formData.responsable}
-                onChange={(e) => setFormData({ ...formData, responsable: e.target.value })}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="telefono">Teléfono *</Label>
-              <Input
-                id="telefono"
-                required
-                type="tel"
-                placeholder="+52 555 123 4567"
-                value={formData.telefono}
-                onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
-              />
-            </div>
-
-            <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="email">Email *</Label>
-              <Input
-                id="email"
-                required
-                type="email"
-                placeholder="centro@empresa.com"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              />
-            </div>
-
-            <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="descripcion">Descripción</Label>
-              <Textarea
-                id="descripcion"
-                placeholder="Breve descripción del centro de trabajo..."
-                rows={4}
-                value={formData.descripcion}
-                onChange={(e) => setFormData({ ...formData, descripcion: e.target.value })}
-              />
             </div>
           </div>
 
