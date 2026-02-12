@@ -157,6 +157,10 @@ export default function GestionPasantiasPage() {
   const [asignarSearch, setAsignarSearch] = useState("")
   const [centroSearch, setCentroSearch] = useState("")
   const [plazaSearch, setPlazaSearch] = useState("")
+  const [nuevaEstudianteSearch, setNuevaEstudianteSearch] = useState("")
+  const [nuevaTallerSearch, setNuevaTallerSearch] = useState("")
+  const [nuevaCentroSearch, setNuevaCentroSearch] = useState("")
+  const [nuevaTutorSearch, setNuevaTutorSearch] = useState("")
 
   const filteredEstudiantes = estudiantes.filter(est => 
     est.nombre.toLowerCase().includes(asignarSearch.toLowerCase()) ||
@@ -164,6 +168,20 @@ export default function GestionPasantiasPage() {
   )
   const filteredCentros = centros.filter(centro => 
     centro.toLowerCase().includes(centroSearch.toLowerCase())
+  )
+  
+  const filteredNuevaEstudiantes = estudiantes.filter(est => 
+    est.nombre.toLowerCase().includes(nuevaEstudianteSearch.toLowerCase()) ||
+    est.matricula.includes(nuevaEstudianteSearch)
+  )
+  const filteredNuevaTalleres = talleres.filter(t => 
+    t !== "Todos" && t.toLowerCase().includes(nuevaTallerSearch.toLowerCase())
+  )
+  const filteredNuevaCentros = centros.filter(centro => 
+    centro.toLowerCase().includes(nuevaCentroSearch.toLowerCase())
+  )
+  const filteredNuevaTutores = tutores.filter(tutor => 
+    tutor.toLowerCase().includes(nuevaTutorSearch.toLowerCase())
   )
 
   const [newPasantia, setNewPasantia] = useState({
@@ -555,65 +573,161 @@ export default function GestionPasantiasPage() {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label>Estudiante</Label>
-                      <Select 
-                        value={newPasantia.estudiante} 
-                        onValueChange={(v) => {
-                          const est = estudiantes.find(e => e.nombre === v)
-                          setNewPasantia({...newPasantia, estudiante: v, matricula: est?.matricula || ""})
-                        }}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Seleccionar estudiante" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {estudiantes.map(est => (
-                            <SelectItem key={est.matricula} value={est.nombre}>
-                              {est.nombre} - {est.matricula}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          placeholder="Buscar estudiante por nombre o matrícula..."
+                          value={nuevaEstudianteSearch}
+                          onChange={(e) => setNuevaEstudianteSearch(e.target.value)}
+                          className="pl-10"
+                        />
+                      </div>
+                      {newPasantia.estudiante && !nuevaEstudianteSearch && (
+                        <div className="text-sm text-muted-foreground bg-muted/50 p-2 rounded">
+                          Seleccionado: <span className="font-medium">{newPasantia.estudiante} - {newPasantia.matricula}</span>
+                        </div>
+                      )}
+                      {nuevaEstudianteSearch && (
+                        <div className="border rounded-md max-h-32 overflow-y-auto">
+                          {filteredNuevaEstudiantes.length > 0 ? (
+                            filteredNuevaEstudiantes.map(est => (
+                              <div
+                                key={est.matricula}
+                                className="px-3 py-2 hover:bg-muted cursor-pointer text-sm"
+                                onClick={() => {
+                                  setNewPasantia({...newPasantia, estudiante: est.nombre, matricula: est.matricula})
+                                  setNuevaEstudianteSearch("")
+                                }}
+                              >
+                                {est.nombre} - {est.matricula}
+                              </div>
+                            ))
+                          ) : (
+                            <div className="px-3 py-2 text-sm text-muted-foreground">
+                              No se encontraron estudiantes
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                     <div className="space-y-2">
                       <Label>Taller</Label>
-                      <Select value={newPasantia.taller} onValueChange={(v) => setNewPasantia({...newPasantia, taller: v})}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Seleccionar taller" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {talleres.filter(t => t !== "Todos").map(taller => (
-                            <SelectItem key={taller} value={taller}>{taller}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          placeholder="Buscar taller..."
+                          value={nuevaTallerSearch}
+                          onChange={(e) => setNuevaTallerSearch(e.target.value)}
+                          className="pl-10"
+                        />
+                      </div>
+                      {newPasantia.taller && !nuevaTallerSearch && (
+                        <div className="text-sm text-muted-foreground bg-muted/50 p-2 rounded">
+                          Seleccionado: <span className="font-medium">{newPasantia.taller}</span>
+                        </div>
+                      )}
+                      {nuevaTallerSearch && (
+                        <div className="border rounded-md max-h-32 overflow-y-auto">
+                          {filteredNuevaTalleres.length > 0 ? (
+                            filteredNuevaTalleres.map(taller => (
+                              <div
+                                key={taller}
+                                className="px-3 py-2 hover:bg-muted cursor-pointer text-sm"
+                                onClick={() => {
+                                  setNewPasantia({...newPasantia, taller})
+                                  setNuevaTallerSearch("")
+                                }}
+                              >
+                                {taller}
+                              </div>
+                            ))
+                          ) : (
+                            <div className="px-3 py-2 text-sm text-muted-foreground">
+                              No se encontraron talleres
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label>Centro de Trabajo</Label>
-                      <Select value={newPasantia.centroTrabajo} onValueChange={(v) => setNewPasantia({...newPasantia, centroTrabajo: v})}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Seleccionar centro" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {centros.map(centro => (
-                            <SelectItem key={centro} value={centro}>{centro}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          placeholder="Buscar centro de trabajo..."
+                          value={nuevaCentroSearch}
+                          onChange={(e) => setNuevaCentroSearch(e.target.value)}
+                          className="pl-10"
+                        />
+                      </div>
+                      {newPasantia.centroTrabajo && !nuevaCentroSearch && (
+                        <div className="text-sm text-muted-foreground bg-muted/50 p-2 rounded">
+                          Seleccionado: <span className="font-medium">{newPasantia.centroTrabajo}</span>
+                        </div>
+                      )}
+                      {nuevaCentroSearch && (
+                        <div className="border rounded-md max-h-32 overflow-y-auto">
+                          {filteredNuevaCentros.length > 0 ? (
+                            filteredNuevaCentros.map(centro => (
+                              <div
+                                key={centro}
+                                className="px-3 py-2 hover:bg-muted cursor-pointer text-sm"
+                                onClick={() => {
+                                  setNewPasantia({...newPasantia, centroTrabajo: centro})
+                                  setNuevaCentroSearch("")
+                                }}
+                              >
+                                {centro}
+                              </div>
+                            ))
+                          ) : (
+                            <div className="px-3 py-2 text-sm text-muted-foreground">
+                              No se encontraron centros
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                     <div className="space-y-2">
                       <Label>Tutor Asignado</Label>
-                      <Select value={newPasantia.tutor} onValueChange={(v) => setNewPasantia({...newPasantia, tutor: v})}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Seleccionar tutor" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {tutores.map(tutor => (
-                            <SelectItem key={tutor} value={tutor}>{tutor}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          placeholder="Buscar tutor..."
+                          value={nuevaTutorSearch}
+                          onChange={(e) => setNuevaTutorSearch(e.target.value)}
+                          className="pl-10"
+                        />
+                      </div>
+                      {newPasantia.tutor && !nuevaTutorSearch && (
+                        <div className="text-sm text-muted-foreground bg-muted/50 p-2 rounded">
+                          Seleccionado: <span className="font-medium">{newPasantia.tutor}</span>
+                        </div>
+                      )}
+                      {nuevaTutorSearch && (
+                        <div className="border rounded-md max-h-32 overflow-y-auto">
+                          {filteredNuevaTutores.length > 0 ? (
+                            filteredNuevaTutores.map(tutor => (
+                              <div
+                                key={tutor}
+                                className="px-3 py-2 hover:bg-muted cursor-pointer text-sm"
+                                onClick={() => {
+                                  setNewPasantia({...newPasantia, tutor})
+                                  setNuevaTutorSearch("")
+                                }}
+                              >
+                                {tutor}
+                              </div>
+                            ))
+                          ) : (
+                            <div className="px-3 py-2 text-sm text-muted-foreground">
+                              No se encontraron tutores
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="grid grid-cols-3 gap-4">
