@@ -13,7 +13,7 @@ import CalificacionesPage from '@/features/evaluaciones/calificacion/page';
 import ReportesPage from '@/features/reportes/page';
 import CierrePasantiasPage from '@/features/procesoDePasantias/cierreDePasantias/page';
 import ExcusasPage from '@/features/procesoDePasantias/excusas/page';
-import GestionPasantiasPage from '@/features/procesoDePasantias/gestionDePasantias/page';
+import GestionPasantiasPage from '@/features/procesoDePasantias/gestionDePasantias/pages/page';
 
 
 function RoutersProtected() {
