@@ -18,14 +18,51 @@ Zap,
 BarChart3,
 Clock,
 Award,
+User,
+LogOut,
+LogIn,
 } from "lucide-react"
+import { useState } from "react"
+import { ModeToggle } from "../../main/components/mode-toggle"
 
 
 export default function InicioPage() {
-return (
- <div className="min-h-screen bg-background">
+  const [authenticated, setAuthenticated] = useState(false);
 
- <section
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header with Authentication */}
+      <header className="flex justify-between items-center px-6 py-4 border-b">
+        <div className="flex items-center gap-2">
+          <h1 className="text-xl font-bold">
+            CHECK<span className="text-primary">iNT</span>
+          </h1>
+        </div>
+        
+        <div className="flex items-center gap-4">
+          <ModeToggle />
+          
+          {authenticated ? (
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 px-3 py-2 rounded-lg border bg-muted/50">
+                <User className="h-4 w-4 text-muted-foreground" />
+                <span className="text-sm font-medium">Usuario</span>
+              </div>
+              <Button variant="outline" size="sm" onClick={() => setAuthenticated(false)}>
+                <LogOut className="h-4 w-4 mr-2" />
+                Cerrar Sesión
+              </Button>
+            </div>
+          ) : (
+            <Button variant="outline" size="sm" onClick={() => setAuthenticated(true)}>
+              <LogIn className="h-4 w-4 mr-2" />
+              Iniciar Sesión
+            </Button>
+          )}
+        </div>
+      </header>
+
+      <section
   className="border-b relative overflow-hidden bg-primary-foreground" > 
  
   <div className="container mx-auto px-6 py-16 lg:py-24 relative z-10">

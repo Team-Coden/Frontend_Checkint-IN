@@ -15,10 +15,23 @@ import {
   SidebarTrigger,
 } from "@/shared/components/ui/sidebar"
 import { ModeToggle } from "../components/mode-toggle"
-import { useBreadcrumbs } from "../../../shared/hooks/useBreadcrumbs"   
+import { useBreadcrumbs } from "../../../shared/hooks/useBreadcrumbs"
+import { useState } from "react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/shared/components/ui/dialog"
+import { Button } from "@/shared/components/ui/button"   
 
 export default function Main({ children }: { children?: React.ReactNode }) {
-  const breadcrumbs = useBreadcrumbs() 
+  const breadcrumbs = useBreadcrumbs()
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false)
+
+  const handleInicioClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setShowConfirmDialog(true)
+  }
+
+  const handleConfirmNavigation = () => {
+    window.location.href = "/"
+  } 
 
   return (
     <SidebarProvider>
@@ -37,7 +50,11 @@ export default function Main({ children }: { children?: React.ReactNode }) {
 
                 {/* Inicio */}
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="/" className="text-foreground hover:text-foreground">
+                  <BreadcrumbLink 
+                    href="/" 
+                    className="text-foreground hover:text-foreground cursor-pointer"
+                    onClick={handleInicioClick}
+                  >
                     Inicio
                   </BreadcrumbLink>
                 </BreadcrumbItem>
@@ -73,6 +90,37 @@ export default function Main({ children }: { children?: React.ReactNode }) {
         <main className="p-6 md:p-10">
           {children}
         </main>
+
+        {/* Confirmation Dialog for Inicio */}
+        <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                ¿Regresar a la página principal?
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <p className="text-sm text-muted-foreground">
+                ¿Está seguro que desea regresar a la página principal? Perderá cualquier progreso no guardado en la página actual.
+              </p>
+              <div className="flex gap-2 pt-4">
+                <Button
+                  variant="outline"
+                  onClick={() => setShowConfirmDialog(false)}
+                  className="flex-1"
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  onClick={handleConfirmNavigation}
+                  className="flex-1"
+                >
+                  Regresar al Inicio
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </SidebarInset>
     </SidebarProvider>
   )
