@@ -11,7 +11,7 @@ import SubirDocumentosPage from '@/features/documentacion/subir/page';
 import EvaluacionesPage from '@/features/evaluaciones/evaluacion/page';
 import CalificacionesPage from '@/features/evaluaciones/calificacion/page';
 import ReportesPage from '@/features/reportes/page';
-import CierrePasantiasPage from '@/features/procesoDePasantias/cierreDePasantias/page';
+import CierrePasantiasPage from '@/features/procesoDePasantias/cierreDePasantias/pages/page';
 import ExcusasPage from '@/features/procesoDePasantias/excusas/page';
 import GestionPasantiasPage from '@/features/procesoDePasantias/gestionDePasantias/pages/page';
 
