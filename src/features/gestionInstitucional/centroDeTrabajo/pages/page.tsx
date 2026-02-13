@@ -332,8 +332,7 @@ export default function CentroDeTrabajoPage() {
         <RegisterCenterDialog
           open={isDialogOpen}
           onOpenChange={setIsDialogOpen}
-          onAddCentro={addCentro}
-        />
+          onAddCentro={addCentro} direcciones={[]} contactos={[]}        />
 
         {/* Diálogo de Confirmación para Eliminar */}
         <DeleteConfirmDialog

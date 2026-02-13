@@ -9,6 +9,13 @@ export interface CentroTrabajo {
   validated: boolean;
   createdAt: string;
   deletedAt?: string;
+  // Additional fields for backend integration
+  id_direccion?: number;
+  id_contacto?: number;
+  restriccion_edad?: boolean;
+  id_usuario?: number | null;
+  validacion?: string | null;
+  fecha_creacion?: string;
 }
 
 export interface CentroStats {
