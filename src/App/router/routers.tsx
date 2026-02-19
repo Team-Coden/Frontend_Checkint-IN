@@ -16,6 +16,7 @@ import ExcusasPage from '@/features/procesoDePasantias/excusas/pages/page';
 import GestionPasantiasPage from '@/features/procesoDePasantias/gestionDePasantias/pages/page';
 import SupervisoresPage from '@/features/rolesYpersonal/supervisores/pages/page';
 import VinculadoresPage from '@/features/rolesYpersonal/vinculadores/pages/page';
+import EstudiantesPage from '@/features/gestionAcademica/estudiantes/pages/page';
 
 function RoutersProtected() {
   return (
@@ -38,6 +39,7 @@ function RoutersProtected() {
         <Route path="/excusas" element={<ExcusasPage/>} />
         <Route path="/supervisores" element={<SupervisoresPage/>} />
         <Route path="/vinculadores" element={<VinculadoresPage/>} />
+        <Route path="/estudiantes" element={<EstudiantesPage/>} />
       </Routes>
     </BrowserRouter>
   )

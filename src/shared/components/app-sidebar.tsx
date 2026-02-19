@@ -49,7 +49,7 @@ const data = {
       items: [
         {
           title: "Estudiantes",
-          url: "#",
+          url: "/estudiantes",
         },
         {
           title: "Talleres",
