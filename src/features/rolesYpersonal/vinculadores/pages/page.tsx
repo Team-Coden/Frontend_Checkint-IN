@@ -8,18 +8,18 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../../../../shared/components/ui/dialog";
 import { Search, Users, Plus, Download, Filter, ChevronLeft, ChevronRight } from "lucide-react";
 import Main from '../../../main/pages/page';
-import { useSupervisores } from "../hooks/useSupervisores";
-import { SupervisorTable } from "../components/SupervisorTable";
-import { RegisterSupervisorDialog } from "../components/RegisterSupervisorDialog";
-import { EditSupervisorDialog } from "../components/EditSupervisorDialog";
-import { ViewSupervisorDialog } from "../components/ViewSupervisorDialog";
-import type { Supervisor } from "../types";
+import { useVinculadores } from "../hooks/useVinculadores";
+import { VinculadorTable } from "../components/VinculadorTable";
+import { RegisterVinculadorDialog } from "../components/RegisterVinculadorDialog";
+import { EditVinculadorDialog } from "../components/EditVinculadorDialog";
+import { ViewVinculadorDialog } from "../components/ViewVinculadorDialog";
+import type { Vinculador } from "../types";
 
-export default function SupervisoresPage() {
+export default function VinculadoresPage() {
   const {
-    supervisores,
-    filteredSupervisores,
-    paginatedSupervisores,
+    vinculadores,
+    filteredVinculadores,
+    paginatedVinculadores,
     currentPage,
     totalPages,
     setCurrentPage,
@@ -28,67 +28,67 @@ export default function SupervisoresPage() {
     setSearchTerm,
     statusFilter,
     setStatusFilter,
-    addSupervisor,
-    updateSupervisor,
-    deleteSupervisor,
-    restoreSupervisor,
-    permanentlyDeleteSupervisor,
-  } = useSupervisores();
+    createVinculador,
+    updateVinculador,
+    deleteVinculador,
+    restoreVinculador,
+    permanentlyDeleteVinculador,
+  } = useVinculadores();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [selectedSupervisor, setSelectedSupervisor] = useState<Supervisor | null>(null);
+  const [selectedVinculador, setSelectedVinculador] = useState<Vinculador | null>(null);
   const [isPermanentDelete, setIsPermanentDelete] = useState(false);
 
-  const handleView = (supervisor: Supervisor) => {
-    setSelectedSupervisor(supervisor);
+  const handleView = (vinculador: Vinculador) => {
+    setSelectedVinculador(vinculador);
     setIsViewDialogOpen(true);
   };
 
-  const handleEdit = (supervisor: Supervisor) => {
-    setSelectedSupervisor(supervisor);
+  const handleEdit = (vinculador: Vinculador) => {
+    setSelectedVinculador(vinculador);
     setIsEditDialogOpen(true);
   };
 
-  const handleDelete = (id: string) => {
-    const supervisor = supervisores.find(s => s.id === id);
-    if (supervisor) {
-      setSelectedSupervisor(supervisor);
-      setIsPermanentDelete(supervisor.estado === 'inactivo');
+  const handleDelete = (id: number) => {
+    const vinculador = vinculadores.find(v => v.id === id);
+    if (vinculador) {
+      setSelectedVinculador(vinculador);
+      setIsPermanentDelete(vinculador.estado === 'inactivo');
       setIsDeleteDialogOpen(true);
     }
   };
 
   const handleConfirmDelete = () => {
-    if (selectedSupervisor) {
+    if (selectedVinculador) {
       if (isPermanentDelete) {
-        permanentlyDeleteSupervisor(selectedSupervisor.id);
+        permanentlyDeleteVinculador(selectedVinculador.id);
       } else {
-        deleteSupervisor(selectedSupervisor.id);
+        deleteVinculador(selectedVinculador.id);
       }
       setIsDeleteDialogOpen(false);
-      setSelectedSupervisor(null);
+      setSelectedVinculador(null);
     }
   };
 
-  const handleRestore = (supervisor: Supervisor) => {
-    restoreSupervisor(supervisor.id);
+  const handleRestore = (vinculador: Vinculador) => {
+    restoreVinculador(vinculador.id);
   };
 
   const handleExport = () => {
     const csvContent = [
-      ['ID', 'Nombre', 'Apellido', 'Email', 'Teléfono', 'Centro de Trabajo', 'Estado', 'Fecha Contratación'],
-      ...filteredSupervisores.map(supervisor => [
-        supervisor.id,
-        supervisor.nombre,
-        supervisor.apellido,
-        supervisor.email,
-        supervisor.telefono,
-        supervisor.nombre_centro,
-        supervisor.estado,
-        supervisor.fecha_contratacion
+      ['ID', 'Nombre', 'Apellido', 'Email', 'Teléfono', 'Centro de Trabajo', 'Estado', 'Fecha Creación'],
+      ...filteredVinculadores.map(vinculador => [
+        vinculador.id,
+        vinculador.nombre,
+        vinculador.apellido,
+        vinculador.email,
+        vinculador.telefono,
+        vinculador.nombre_centro,
+        vinculador.estado,
+        vinculador.fecha_creacion
       ])
     ].map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
 
@@ -96,7 +96,7 @@ export default function SupervisoresPage() {
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
-    link.setAttribute('download', `supervisores_${new Date().toISOString().split('T')[0]}.csv`);
+    link.setAttribute('download', `vinculadores_${new Date().toISOString().split('T')[0]}.csv`);
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
@@ -123,11 +123,11 @@ export default function SupervisoresPage() {
               <Users className="h-6 w-6 text-primary" />
             </div>
             <h1 className="text-3xl font-bold text-foreground text-balance">
-              Gestión de Supervisores
+              Gestión de Vinculadores
             </h1>
           </div>
           <p className="text-muted-foreground ml-12">
-            Gestiona y administra todos los supervisores del sistema
+            Gestiona y administra todos los vinculadores del sistema
           </p>
         </div>
 
@@ -149,7 +149,7 @@ export default function SupervisoresPage() {
                     onClick={() => setIsDialogOpen(true)}
                     className="gap-2 bg-primary hover:bg-primary/90"
                   >
-                    <Plus className="h-4 w-4" /> Nuevo Supervisor
+                    <Plus className="h-4 w-4" /> Nuevo Vinculador
                   </Button>
                 </div>
               </div>
@@ -182,14 +182,14 @@ export default function SupervisoresPage() {
               </div>
 
               <p className="text-sm text-muted-foreground mb-4">
-                Mostrando {paginatedSupervisores.length} de {filteredSupervisores.length} supervisores (Página {currentPage} de {totalPages})
+                Mostrando {paginatedVinculadores.length} de {filteredVinculadores.length} vinculadores (Página {currentPage} de {totalPages})
               </p>
 
               {/* Table */}
-              {filteredSupervisores.length > 0 ? (
+              {filteredVinculadores.length > 0 ? (
                 <>
-                  <SupervisorTable
-                    supervisores={paginatedSupervisores}
+                  <VinculadorTable
+                    vinculadores={paginatedVinculadores}
                     onView={handleView}
                     onEdit={handleEdit}
                     onDelete={handleDelete}
@@ -261,10 +261,10 @@ export default function SupervisoresPage() {
                     <Search className="h-12 w-12 text-muted-foreground" />
                   </div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">
-                    No hay supervisores que coincidan
+                    No hay vinculadores que coincidan
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    Intenta ajustar los filtros o crea un nuevo supervisor
+                    Intenta ajustar los filtros o crea un nuevo vinculador
                   </p>
                 </div>
               )}
@@ -272,23 +272,33 @@ export default function SupervisoresPage() {
           </Card>
 
           {/* Dialogs */}
-          <RegisterSupervisorDialog
+          <RegisterVinculadorDialog
             open={isDialogOpen}
             onOpenChange={setIsDialogOpen}
-            onAddSupervisor={addSupervisor}
+            onSubmit={createVinculador}
           />
 
-          <EditSupervisorDialog
+          <EditVinculadorDialog
             open={isEditDialogOpen}
             onOpenChange={setIsEditDialogOpen}
-            supervisor={selectedSupervisor}
-            onUpdateSupervisor={updateSupervisor}
+            vinculador={selectedVinculador}
+            onSubmit={(data) => {
+              if (selectedVinculador) {
+                const updatedVinculador: Vinculador = {
+                  ...selectedVinculador,
+                  ...data,
+                  nombre_centro: `Centro ${data.id_centro_trabajo}`,
+                  nombre_contacto: `${data.nombre} ${data.apellido}`,
+                };
+                updateVinculador(updatedVinculador);
+              }
+            }}
           />
 
-          <ViewSupervisorDialog
+          <ViewVinculadorDialog
             open={isViewDialogOpen}
             onOpenChange={setIsViewDialogOpen}
-            supervisor={selectedSupervisor}
+            vinculador={selectedVinculador}
           />
 
           {/* Delete Confirmation Dialog */}
@@ -296,12 +306,12 @@ export default function SupervisoresPage() {
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>
-                  {isPermanentDelete ? "Eliminar Permanentemente" : "Eliminar Supervisor"}
+                  {isPermanentDelete ? "Eliminar Permanentemente" : "Eliminar Vinculador"}
                 </DialogTitle>
                 <DialogDescription>
                   {isPermanentDelete
-                    ? `¿Estás seguro de eliminar permanentemente a ${selectedSupervisor?.nombre} ${selectedSupervisor?.apellido}? Esta acción no se puede deshacer.`
-                    : `¿Estás seguro de eliminar a ${selectedSupervisor?.nombre} ${selectedSupervisor?.apellido}? Podrás restaurarlo más tarde.`}
+                    ? `¿Estás seguro de eliminar permanentemente a ${selectedVinculador?.nombre} ${selectedVinculador?.apellido}? Esta acción no se puede deshacer.`
+                    : `¿Estás seguro de eliminar a ${selectedVinculador?.nombre} ${selectedVinculador?.apellido}? Podrás restaurarlo más tarde.`}
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>

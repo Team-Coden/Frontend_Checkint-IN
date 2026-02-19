@@ -38,11 +38,16 @@ export function NavMain({
 
   // 1. Estado para los menús abiertos (máximo 3)
   const [openMenus, setOpenMenus] = useState<string[]>(() => {
-    // Al cargar, abrimos los que vienen como isActive por defecto
-    return items
+    console.log('Inicializando nav-main - window.location.pathname:', window.location.pathname)
+    console.log('Inicializando nav-main - items:', items)
+    
+    const initialMenus = items
       .filter((item) => item.isActive || item.items?.some((sub) => sub.url === window.location.pathname))
       .map((item) => item.title)
       .slice(0, 3)
+    
+    console.log('Menús iniciales:', initialMenus)
+    return initialMenus
   })
 
   // 2. Definimos handleToggle ANTES del useEffect para evitar el error de "acceso antes de declaración"
@@ -59,10 +64,16 @@ export function NavMain({
 
   // 3. Efecto para abrir el menú automáticamente cuando navegas a una sub-ruta
   useEffect(() => {
+    console.log('useEffect nav-main - pathname:', location.pathname)
+    console.log('useEffect nav-main - openMenus:', openMenus)
+    
     items.forEach((item) => {
       const isSubItemActive = item.items?.some((sub) => sub.url === location.pathname)
+      console.log('Item:', item.title, 'isSubItemActive:', isSubItemActive)
+      
       // Si estamos en una ruta de este módulo y el módulo está cerrado, lo abrimos
       if (isSubItemActive && !openMenus.includes(item.title)) {
+        console.log('Abriendo menú:', item.title)
         handleToggle(item.title)
       }
     })

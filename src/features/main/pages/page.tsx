@@ -18,11 +18,14 @@ import { ModeToggle } from "../components/mode-toggle"
 import { useBreadcrumbs } from "../../../shared/hooks/useBreadcrumbs"
 import { useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/shared/components/ui/dialog"
-import { Button } from "@/shared/components/ui/button"   
+import { Button } from "@/shared/components/ui/button"
+import { useNavigate } from "react-router-dom"   
+import { Toaster } from "@/shared/components/ui/sonner"   
 
 export default function Main({ children }: { children?: React.ReactNode }) {
   const breadcrumbs = useBreadcrumbs()
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
+  const navigate = useNavigate()
 
   const handleInicioClick = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -30,7 +33,7 @@ export default function Main({ children }: { children?: React.ReactNode }) {
   }
 
   const handleConfirmNavigation = () => {
-    window.location.href = "/"
+    navigate("/")
   } 
 
   return (
@@ -122,6 +125,7 @@ export default function Main({ children }: { children?: React.ReactNode }) {
           </DialogContent>
         </Dialog>
       </SidebarInset>
+      <Toaster />
     </SidebarProvider>
   )
 }

@@ -1,139 +1,109 @@
-import { useState, useCallback } from 'react';
-import type { Supervisor, SupervisorFormData, ApiResponse } from '../types';
+'use client';
 
-// Mock service - Replace with actual API calls
-const mockCreateSupervisor = async (data: SupervisorFormData): Promise<ApiResponse<Supervisor>> => {
-  // Simulate API call
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const newSupervisor: Supervisor = {
-        id: Math.floor(Math.random() * 1000) + 100, // Generate a random ID
-        nombre: data.nombre,
-        apellido: data.apellido,
-        id_contacto: parseInt(data.id_contacto),
-        id_centro_trabajo: data.id_centro_trabajo ? parseInt(data.id_centro_trabajo) : null,
-        estado: data.estado,
-        fecha_creacion: new Date().toISOString(),
-        nombre_contacto: `${data.nombre} ${data.apellido}`,
-        nombre_centro: data.id_centro_trabajo ? `Centro ${data.id_centro_trabajo}` : 'Sin asignar',
-      };
-      
-      resolve({
-        data: newSupervisor,
-        success: true,
-        message: 'Supervisor creado exitosamente',
-      });
-    }, 500);
-  });
-};
+import { useState, useMemo } from "react";
+import type { Supervisor, SupervisorStats, SupervisorFormData } from "../types";
+import { initialSupervisorData } from "../types/mockData";
 
-const mockUpdateSupervisor = async (id: number, data: SupervisorFormData): Promise<ApiResponse<Supervisor>> => {
-  // Simulate API call
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const updatedSupervisor: Supervisor = {
-        id,
-        nombre: data.nombre,
-        apellido: data.apellido,
-        id_contacto: parseInt(data.id_contacto),
-        id_centro_trabajo: data.id_centro_trabajo ? parseInt(data.id_centro_trabajo) : null,
-        estado: data.estado,
-        fecha_creacion: new Date().toISOString(),
-        nombre_contacto: `${data.nombre} ${data.apellido}`,
-        nombre_centro: data.id_centro_trabajo ? `Centro ${data.id_centro_trabajo}` : 'Sin asignar',
-      };
-      
-      resolve({
-        data: updatedSupervisor,
-        success: true,
-        message: 'Supervisor actualizado exitosamente',
-      });
-    }, 500);
-  });
-};
+export const useSupervisores = () => {
+  const [supervisores, setSupervisores] = useState<Supervisor[]>(initialSupervisorData);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("todos");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 15;
 
-const mockDeleteSupervisor = async (id: number): Promise<ApiResponse<boolean>> => {
-  // Simulate API call
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        data: true,
-        success: true,
-        message: 'Supervisor eliminado exitosamente',
-      });
-    }, 500);
-  });
-};
+  // Filter logic
+  const filteredSupervisores = useMemo(() => {
+    return supervisores.filter((supervisor) => {
+      const matchesSearch =
+        supervisor.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        supervisor.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        supervisor.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        supervisor.nombre_centro.toLowerCase().includes(searchTerm.toLowerCase());
 
-export const useSupervisores = (initialData: Supervisor[] = []) => {
-  const [supervisores, setSupervisores] = useState<Supervisor[]>(initialData);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+      const matchesStatus =
+        statusFilter === "todos" || supervisor.estado === statusFilter;
 
-  const createSupervisor = useCallback(async (data: SupervisorFormData) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await mockCreateSupervisor(data);
-      if (response.success && response.data) {
-        setSupervisores(prev => [...prev, response.data as Supervisor]);
-      }
-      return response;
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Error al crear el supervisor';
-      setError(errorMessage);
-      return { success: false, message: errorMessage } as ApiResponse<null>;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+      return matchesSearch && matchesStatus;
+    });
+  }, [supervisores, searchTerm, statusFilter]);
 
-  const updateSupervisor = useCallback(async (id: number, data: SupervisorFormData) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await mockUpdateSupervisor(id, data);
-      if (response.success && response.data) {
-        setSupervisores(prev => 
-          prev.map(supervisor => 
-            supervisor.id === id ? response.data as Supervisor : supervisor
-          )
-        );
-      }
-      return response;
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Error al actualizar el supervisor';
-      setError(errorMessage);
-      return { success: false, message: errorMessage } as ApiResponse<null>;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  // Pagination logic
+  const paginatedSupervisores = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredSupervisores.slice(startIndex, endIndex);
+  }, [filteredSupervisores, currentPage]);
 
-  const deleteSupervisor = useCallback(async (id: number) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await mockDeleteSupervisor(id);
-      if (response.success) {
-        setSupervisores(prev => prev.filter(supervisor => supervisor.id !== id));
-      }
-      return response;
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Error al eliminar el supervisor';
-      setError(errorMessage);
-      return { success: false, message: errorMessage } as ApiResponse<null>;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const totalPages = Math.ceil(filteredSupervisores.length / itemsPerPage);
+
+  const resetPage = () => {
+    setCurrentPage(1);
+  };
+
+  // Stats calculation
+  const stats: SupervisorStats = useMemo(() => {
+    return {
+      total: supervisores.length,
+      activos: supervisores.filter(s => s.estado === "activo").length,
+      inactivos: supervisores.filter(s => s.estado === "inactivo").length,
+    };
+  }, [supervisores]);
+
+  // CRUD operations
+  const addSupervisor = (newSupervisor: SupervisorFormData) => {
+    const supervisor: Supervisor = {
+      ...newSupervisor,
+      id: `S-${Date.now()}`,
+      nombre_centro: `Centro ${newSupervisor.id_centro_trabajo}`,
+      fecha_contratacion: new Date().toISOString().split('T')[0],
+      estado: "activo",
+    };
+    setSupervisores([...supervisores, supervisor]);
+  };
+
+  const updateSupervisor = (updatedSupervisor: Supervisor) => {
+    setSupervisores(supervisores.map((s) => (s.id === updatedSupervisor.id ? updatedSupervisor : s)));
+  };
+
+  const formatDate = (date?: Date) => date?.toLocaleDateString('es-ES');
+
+  const deleteSupervisor = (id: string) => {
+    setSupervisores(
+      supervisores.map((s) =>
+        s.id === id ? { ...s, estado: "inactivo", deletedAt: formatDate(new Date()) } : s
+      )
+    );
+  };
+
+  const restoreSupervisor = (id: string) => {
+    setSupervisores(
+      supervisores.map((s) =>
+        s.id === id ? { ...s, estado: "activo", deletedAt: undefined } : s
+      )
+    );
+  };
+
+  const permanentlyDeleteSupervisor = (id: string) => {
+    setSupervisores(supervisores.filter((s) => s.id !== id));
+  };
 
   return {
     supervisores,
-    loading,
-    error,
-    createSupervisor,
+    filteredSupervisores,
+    paginatedSupervisores,
+    currentPage,
+    totalPages,
+    setCurrentPage,
+    resetPage,
+    stats,
+    searchTerm,
+    setSearchTerm,
+    statusFilter,
+    setStatusFilter,
+    addSupervisor,
     updateSupervisor,
     deleteSupervisor,
+    restoreSupervisor,
+    permanentlyDeleteSupervisor,
   };
 };

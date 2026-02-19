@@ -91,7 +91,7 @@ const data = {
         },
         {
           title: "Vinculadores",
-          url: "#",
+          url: "/vinculadores",
         }
       ],
     },

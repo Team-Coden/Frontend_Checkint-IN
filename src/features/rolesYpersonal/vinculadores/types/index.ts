@@ -1,5 +1,5 @@
-export interface Supervisor {
-  id: string;
+export interface Vinculador {
+  id: number;
   nombre: string;
   apellido: string;
   email: string;
@@ -7,11 +7,13 @@ export interface Supervisor {
   id_centro_trabajo: number;
   nombre_centro: string;
   estado: 'activo' | 'inactivo';
-  fecha_contratacion: string;
+  id_contacto: number;
+  fecha_creacion: string;
+  nombre_contacto: string;
   deletedAt?: string;
 }
 
-export interface SupervisorFormData {
+export interface VinculadorFormData {
   nombre: string;
   apellido: string;
   email: string;
@@ -20,7 +22,7 @@ export interface SupervisorFormData {
   estado: 'activo' | 'inactivo';
 }
 
-export interface SupervisorStats {
+export interface VinculadorStats {
   total: number;
   activos: number;
   inactivos: number;

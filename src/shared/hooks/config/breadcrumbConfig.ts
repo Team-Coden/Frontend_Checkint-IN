@@ -20,4 +20,6 @@ export const breadcrumbHierarchy: Record<string, { parent: string; label: string
   "gestionDePasantias": { parent: "proceso-pasantias", label: "Gestión de Pasantías" },
   "cierrePasantias": { parent: "proceso-pasantias", label: "Cierre de Pasantías" },
   "excusas": { parent: "proceso-pasantias", label: "Excusas" },
+  "supervisores": { parent: "roles-personal", label: "Supervisores" },
+  "vinculadores": { parent: "roles-personal", label: "Vinculadores" },
 }
