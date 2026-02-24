@@ -2,18 +2,9 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../shared/components/ui/card"
 import { Button } from "../../shared/components/ui/button"
-import { FileText, Star, Building2, FolderOpen, Download, CheckCircle2 } from "lucide-react"
+import { FileText, Star, Building2, FolderOpen, Eye } from "lucide-react"
 import { useState } from "react"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../shared/components/ui/select"
-import { Label } from "../../shared/components/ui/label"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../../shared/components/ui/dialog"
+import { ReportPreview } from "./components/ReportPreview"
 import Main from "../main/pages/page"
 
 interface ReportCard {
@@ -26,14 +17,12 @@ interface ReportCard {
 }
 
 export default function ReportesPage() {
-  const [statusMessage, setStatusMessage] = useState<string | null>(null)
-  const [, setSelectedReport] = useState<string | null>(null)
-  const [filters, setFilters] = useState({
+  const [showPreview, setShowPreview] = useState<string | null>(null)
+  const [filters] = useState({
     taller: "",
-    periodo: "",
+    periodo: "2024",
     formato: "pdf",
   })
-
 
   const reports: ReportCard[] = [
     {
@@ -70,21 +59,12 @@ export default function ReportesPage() {
     },
   ]
 
-  const handleGenerateReport = () => {
-    setStatusMessage(`¡Éxito! El reporte se ha generado en formato ${filters.formato.toUpperCase()}.`)
-    // El timeout es seguro aquí porque es una función asíncrona de evento
-    setTimeout(() => setStatusMessage(null), 5000)
+  const handleShowPreview = (reportId: string) => {
+    setShowPreview(reportId)
   }
 
-  // 2. Función para manejar la apertura/cierre del modal de forma limpia
-  const handleOpenChange = (open: boolean, reportId: string) => {
-    if (open) {
-      setSelectedReport(reportId)
-    } else {
-      setSelectedReport(null)
-    }
-    // Limpiamos el mensaje de éxito cada vez que el modal se abre o se cierra
-    setStatusMessage(null)
+  const handleClosePreview = () => {
+    setShowPreview(null)
   }
 
   return (
@@ -100,102 +80,29 @@ export default function ReportesPage() {
             {reports.map((report) => {
               const Icon = report.icon
               return (
-                <Dialog 
-                  key={report.id} 
-                  // 3. Usamos onOpenChange para resetear los estados sin useEffect
-                  onOpenChange={(open) => handleOpenChange(open, report.id)}
+                <Card
+                  key={report.id}
+                  className={`${report.bgColor} border-2 cursor-pointer transition-all hover:shadow-lg hover:scale-[1.02]`}
+                  onClick={() => handleShowPreview(report.id)}
                 >
-                  <DialogTrigger asChild>
-                    <Card
-                      className={`${report.bgColor} border-2 cursor-pointer transition-all hover:shadow-lg hover:scale-[1.02]`}
-                    >
-                      <CardHeader>
-                        <div className="flex items-center gap-4">
-                          <div className={`rounded-full p-4 ${report.bgColor}`}>
-                            <Icon className={`h-8 w-8 ${report.color}`} />
-                          </div>
-                          <div className="flex-1">
-                            <CardTitle className="text-xl mb-2">{report.title}</CardTitle>
-                            <CardDescription className="text-sm">{report.description}</CardDescription>
-                          </div>
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <Button className="w-full bg-transparent" variant="outline">
-                          <Download className="mr-2 h-4 w-4" />
-                          Generar Reporte
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  </DialogTrigger>
-                  
-                  <DialogContent className="sm:max-w-[500px]">
-                    <DialogHeader>
-                      <DialogTitle className="flex items-center gap-2">
-                        <Icon className={`h-5 w-5 ${report.color}`} />
-                        {report.title}
-                      </DialogTitle>
-                      <DialogDescription>{report.description}</DialogDescription>
-                    </DialogHeader>
-
-                    <div className="space-y-6 py-4">
-                      {statusMessage && (
-                        <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-md flex items-center gap-3 animate-in fade-in zoom-in duration-300">
-                          <CheckCircle2 className="h-5 w-5" />
-                          <p className="text-sm font-medium">{statusMessage}</p>
-                        </div>
-                      )}
-
-                      {/* Selects y Filtros (Sin cambios) */}
-                      <div className="space-y-2">
-                        <Label>Seleccionar Taller</Label>
-                        <Select
-                          value={filters.taller}
-                          onValueChange={(v) => setFilters({ ...filters, taller: v })}
-                        >
-                          <SelectTrigger><SelectValue placeholder="Seleccione un taller" /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="desarrollo-web">Desarrollo Web</SelectItem>
-                            <SelectItem value="todos">Todos los talleres</SelectItem>
-                          </SelectContent>
-                        </Select>
+                  <CardHeader>
+                    <div className="flex items-center gap-4">
+                      <div className={`rounded-full p-4 ${report.bgColor}`}>
+                        <Icon className={`h-8 w-8 ${report.color}`} />
                       </div>
-
-                      <div className="space-y-2">
-                        <Label>Período</Label>
-                        <Select
-                          value={filters.periodo}
-                          onValueChange={(v) => setFilters({ ...filters, periodo: v })}
-                        >
-                          <SelectTrigger><SelectValue placeholder="Seleccione un período" /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="2024">2024</SelectItem>
-                            <SelectItem value="todos">Todos los períodos</SelectItem>
-                          </SelectContent>
-                        </Select>
+                      <div className="flex-1">
+                        <CardTitle className="text-xl mb-2">{report.title}</CardTitle>
+                        <CardDescription className="text-sm">{report.description}</CardDescription>
                       </div>
-
-                      <div className="space-y-2">
-                        <Label>Formato</Label>
-                        <Select
-                          value={filters.formato}
-                          onValueChange={(v) => setFilters({ ...filters, formato: v })}
-                        >
-                          <SelectTrigger><SelectValue placeholder="Seleccione formato" /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="pdf">PDF</SelectItem>
-                            <SelectItem value="excel">Excel</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <Button className="w-full" size="lg" onClick={handleGenerateReport}>
-                        <Download className="mr-2 h-4 w-4" />
-                        Generar y Descargar
-                      </Button>
                     </div>
-                  </DialogContent>
-                </Dialog>
+                  </CardHeader>
+                  <CardContent>
+                    <Button className="w-full bg-transparent" variant="outline">
+                      <Eye className="mr-2 h-4 w-4" />
+                      Ver Vista Previa
+                    </Button>
+                  </CardContent>
+                </Card>
               )
             })}
           </div>
@@ -203,6 +110,15 @@ export default function ReportesPage() {
           {/* Info Card (Omitido por brevedad, se mantiene igual) */}
         </div>
       </div>
+
+      {/* Report Preview Modal */}
+      {showPreview && (
+        <ReportPreview
+          reportType={showPreview}
+          filters={filters}
+          onClose={handleClosePreview}
+        />
+      )}
     </Main>
   )
 }
