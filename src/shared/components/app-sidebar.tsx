@@ -53,11 +53,11 @@ const data = {
         },
         {
           title: "Talleres",
-          url: "#",
+          url: "/talleres",
         },
         {
           title: "Tutores",
-          url: "#",
+          url: "/tutores",
         },
       ],
     },

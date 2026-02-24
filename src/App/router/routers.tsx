@@ -17,6 +17,7 @@ import GestionPasantiasPage from '@/features/procesoDePasantias/gestionDePasanti
 import SupervisoresPage from '@/features/rolesYpersonal/supervisores/pages/page';
 import VinculadoresPage from '@/features/rolesYpersonal/vinculadores/pages/page';
 import EstudiantesPage from '@/features/gestionAcademica/estudiantes/pages/page';
+import TalleresPage from '@/features/gestionAcademica/talleres/pages/page';
 
 function RoutersProtected() {
   return (
@@ -40,6 +41,7 @@ function RoutersProtected() {
         <Route path="/supervisores" element={<SupervisoresPage/>} />
         <Route path="/vinculadores" element={<VinculadoresPage/>} />
         <Route path="/estudiantes" element={<EstudiantesPage/>} />
+        <Route path="/talleres" element={<TalleresPage/>} />
       </Routes>
     </BrowserRouter>
   )
