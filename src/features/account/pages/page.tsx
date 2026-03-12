@@ -19,10 +19,10 @@ export default function AccountPage() {
   const [activeTab, setActiveTab] = useState("profile")
 
   const tabs = [
-    { id: "profile", label: "Profile", icon: User },
-    { id: "security", label: "Security", icon: Shield },
-    { id: "notifications", label: "Notifications", icon: Mail },
-    { id: "preferences", label: "Preferences", icon: Settings },
+    { id: "profile", label: "Perfil", icon: User },
+    { id: "security", label: "Seguridad", icon: Shield },
+    { id: "notifications", label: "Notificaciones", icon: Mail },
+    { id: "preferences", label: "Preferencias", icon: Settings },
   ]
 
   return (
@@ -30,9 +30,9 @@ export default function AccountPage() {
       <div className="flex-1 space-y-4 pt-6">
         <div className="flex items-center justify-between space-y-2">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight">Account Settings</h2>
+            <h2 className="text-3xl font-bold tracking-tight">Configuración de Cuenta</h2>
             <p className="text-muted-foreground">
-              Manage your account settings and preferences
+              Gestiona la configuración y preferencias de tu cuenta
             </p>
           </div>
         </div>
@@ -64,65 +64,65 @@ export default function AccountPage() {
             <div className="grid gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Profile Information</CardTitle>
+                  <CardTitle>Información del Perfil</CardTitle>
                   <CardDescription>
-                    Update your personal information and contact details
+                    Actualiza tu información personal y datos de contacto
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="firstName">First Name</Label>
-                      <Input id="firstName" defaultValue="John" />
+                      <Label htmlFor="firstName">Nombre</Label>
+                      <Input id="firstName" defaultValue="Juan" />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" defaultValue="Doe" />
+                      <Label htmlFor="lastName">Apellido</Label>
+                      <Input id="lastName" defaultValue="Pérez" />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email Address</Label>
-                    <Input id="email" type="email" defaultValue="john.doe@example.com" />
+                    <Label htmlFor="email">Correo Electrónico</Label>
+                    <Input id="email" type="email" defaultValue="juan.perez@ejemplo.com" />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
+                    <Label htmlFor="phone">Número de Teléfono</Label>
                     <Input id="phone" type="tel" defaultValue="+1 (555) 123-4567" />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="bio">Bio</Label>
-                    <Input id="bio" placeholder="Tell us about yourself" />
+                    <Label htmlFor="bio">Biografía</Label>
+                    <Input id="bio" placeholder="Cuéntanos sobre ti" />
                   </div>
 
                   <div className="flex gap-3">
-                    <Button size="sm">Save Changes</Button>
-                    <Button variant="outline" size="sm">Cancel</Button>
+                    <Button size="sm">Guardar Cambios</Button>
+                    <Button variant="outline" size="sm">Cancelar</Button>
                   </div>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Account Status</CardTitle>
+                  <CardTitle>Estado de la Cuenta</CardTitle>
                   <CardDescription>
-                    Your current account information and status
+                    Tu información y estado actual de la cuenta
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="space-y-2">
-                      <Label className="text-sm font-medium">Account Type</Label>
+                      <Label className="text-sm font-medium">Tipo de Cuenta</Label>
                       <Badge variant="secondary">Premium</Badge>
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-sm font-medium">Member Since</Label>
-                      <p className="text-sm">January 2024</p>
+                      <Label className="text-sm font-medium">Miembro Desde</Label>
+                      <p className="text-sm">Enero 2024</p>
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-sm font-medium">Last Activity</Label>
-                      <p className="text-sm">2 hours ago</p>
+                      <Label className="text-sm font-medium">Última Actividad</Label>
+                      <p className="text-sm">Hace 2 horas</p>
                     </div>
                   </div>
                 </CardContent>
@@ -135,44 +135,44 @@ export default function AccountPage() {
             <div className="grid gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Change Password</CardTitle>
+                  <CardTitle>Cambiar Contraseña</CardTitle>
                   <CardDescription>
-                    Update your password to keep your account secure
+                    Actualiza tu contraseña para mantener tu cuenta segura
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <Label htmlFor="currentPassword">Current Password</Label>
+                    <Label htmlFor="currentPassword">Contraseña Actual</Label>
                     <Input id="currentPassword" type="password" />
                   </div>
                   <div>
-                    <Label htmlFor="newPassword">New Password</Label>
+                    <Label htmlFor="newPassword">Nueva Contraseña</Label>
                     <Input id="newPassword" type="password" />
                   </div>
                   <div>
-                    <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                    <Label htmlFor="confirmPassword">Confirmar Nueva Contraseña</Label>
                     <Input id="confirmPassword" type="password" />
                   </div>
-                  <Button size="sm">Update Password</Button>
+                  <Button size="sm">Actualizar Contraseña</Button>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Two-Factor Authentication</CardTitle>
+                  <CardTitle>Autenticación de Dos Factores</CardTitle>
                   <CardDescription>
-                    Add an extra layer of security to your account
+                    Añade una capa extra de seguridad a tu cuenta
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <div className="space-y-1">
-                      <p className="text-sm font-medium">Enable 2FA</p>
+                      <p className="text-sm font-medium">Activar 2FA</p>
                       <p className="text-xs text-muted-foreground">
-                        Use an authenticator app to generate codes
+                        Usa una aplicación autenticadora para generar códigos
                       </p>
                     </div>
-                    <Button variant="outline" size="sm">Enable</Button>
+                    <Button variant="outline" size="sm">Activar</Button>
                   </div>
                 </CardContent>
               </Card>
@@ -184,39 +184,39 @@ export default function AccountPage() {
             <div className="grid gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Email Notifications</CardTitle>
+                  <CardTitle>Notificaciones por Correo</CardTitle>
                   <CardDescription>
-                    Choose what email notifications you want to receive
+                    Elige qué notificaciones por correo quieres recibir
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div className="space-y-1">
-                        <p className="text-sm font-medium">Product Updates</p>
+                        <p className="text-sm font-medium">Actualizaciones del Producto</p>
                         <p className="text-xs text-muted-foreground">
-                          News about product features and updates
+                          Noticias sobre características y actualizaciones del producto
                         </p>
                       </div>
-                      <Button variant="outline" size="sm">Configure</Button>
+                      <Button variant="outline" size="sm">Configurar</Button>
                     </div>
                     <div className="flex items-center justify-between">
                       <div className="space-y-1">
-                        <p className="text-sm font-medium">Security Alerts</p>
+                        <p className="text-sm font-medium">Alertas de Seguridad</p>
                         <p className="text-xs text-muted-foreground">
-                          Important security notifications
+                          Notificaciones de seguridad importantes
                         </p>
                       </div>
-                      <Button variant="outline" size="sm">Configure</Button>
+                      <Button variant="outline" size="sm">Configurar</Button>
                     </div>
                     <div className="flex items-center justify-between">
                       <div className="space-y-1">
-                        <p className="text-sm font-medium">Account Activity</p>
+                        <p className="text-sm font-medium">Actividad de la Cuenta</p>
                         <p className="text-xs text-muted-foreground">
-                          Notifications about your account activity
+                          Notificaciones sobre la actividad de tu cuenta
                         </p>
                       </div>
-                      <Button variant="outline" size="sm">Configure</Button>
+                      <Button variant="outline" size="sm">Configurar</Button>
                     </div>
                   </div>
                 </CardContent>
@@ -229,34 +229,34 @@ export default function AccountPage() {
             <div className="grid gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Appearance</CardTitle>
+                  <CardTitle>Apariencia</CardTitle>
                   <CardDescription>
-                    Customize the look and feel of your account
+                    Personaliza el aspecto y la sensación de tu cuenta
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
-                    <Label className="text-sm font-medium">Language</Label>
+                    <Label className="text-sm font-medium">Idioma</Label>
                     <select className="w-full p-2 border rounded-md">
-                      <option>English</option>
-                      <option>Spanish</option>
-                      <option>French</option>
+                      <option>Español</option>
+                      <option>Inglés</option>
+                      <option>Francés</option>
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-sm font-medium">Timezone</Label>
+                    <Label className="text-sm font-medium">Zona Horaria</Label>
                     <select className="w-full p-2 border rounded-md">
-                      <option>UTC-05:00 Eastern Time</option>
-                      <option>UTC-06:00 Central Time</option>
-                      <option>UTC-07:00 Mountain Time</option>
-                      <option>UTC-08:00 Pacific Time</option>
+                      <option>UTC-05:00 Tiempo del Este</option>
+                      <option>UTC-06:00 Tiempo Central</option>
+                      <option>UTC-07:00 Tiempo de Montaña</option>
+                      <option>UTC-08:00 Tiempo del Pacífico</option>
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-sm font-medium">Date Format</Label>
+                    <Label className="text-sm font-medium">Formato de Fecha</Label>
                     <select className="w-full p-2 border rounded-md">
-                      <option>MM/DD/YYYY</option>
                       <option>DD/MM/YYYY</option>
+                      <option>MM/DD/YYYY</option>
                       <option>YYYY-MM-DD</option>
                     </select>
                   </div>
@@ -265,29 +265,29 @@ export default function AccountPage() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Privacy</CardTitle>
+                  <CardTitle>Privacidad</CardTitle>
                   <CardDescription>
-                    Manage your privacy settings and data preferences
+                    Gestiona tu configuración de privacidad y preferencias de datos
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="space-y-1">
-                      <p className="text-sm font-medium">Profile Visibility</p>
+                      <p className="text-sm font-medium">Visibilidad del Perfil</p>
                       <p className="text-xs text-muted-foreground">
-                        Control who can see your profile information
+                        Controla quién puede ver la información de tu perfil
                       </p>
                     </div>
-                    <Button variant="outline" size="sm">Manage</Button>
+                    <Button variant="outline" size="sm">Gestionar</Button>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="space-y-1">
-                      <p className="text-sm font-medium">Data Export</p>
+                      <p className="text-sm font-medium">Exportar Datos</p>
                       <p className="text-xs text-muted-foreground">
-                        Download your personal data
+                        Descarga tus datos personales
                       </p>
                     </div>
-                    <Button variant="outline" size="sm">Export</Button>
+                    <Button variant="outline" size="sm">Exportar</Button>
                   </div>
                 </CardContent>
               </Card>
