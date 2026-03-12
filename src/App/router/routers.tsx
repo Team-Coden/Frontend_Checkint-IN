@@ -19,6 +19,7 @@ import VinculadoresPage from '@/features/rolesYpersonal/vinculadores/pages/page'
 import EstudiantesPage from '@/features/gestionAcademica/estudiantes/pages/page';
 import TalleresPage from '@/features/gestionAcademica/talleres/pages/page';
 import SupportPage from '@/features/support/pages/page';
+import FeedbackPage from '@/features/feedback/pages/page';
 
 function RoutersProtected() {
   return (
@@ -44,6 +45,7 @@ function RoutersProtected() {
         <Route path="/estudiantes" element={<EstudiantesPage/>} />
         <Route path="/talleres" element={<TalleresPage/>} />
         <Route path="/support" element={<SupportPage/>} />
+        <Route path="/feedback" element={<FeedbackPage/>} />
         
       </Routes>
     </BrowserRouter>
