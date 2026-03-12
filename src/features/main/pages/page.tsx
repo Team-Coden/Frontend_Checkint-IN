@@ -20,7 +20,8 @@ import { useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/shared/components/ui/dialog"
 import { Button } from "@/shared/components/ui/button"
 import { useNavigate } from "react-router-dom"   
-import { Toaster } from "@/shared/components/ui/sonner"   
+import { Toaster } from "@/shared/components/ui/sonner"
+import { User, Bell } from "lucide-react"   
 
 export default function Main({ children }: { children?: React.ReactNode }) {
   const breadcrumbs = useBreadcrumbs()
@@ -86,8 +87,24 @@ export default function Main({ children }: { children?: React.ReactNode }) {
            
           </div>
         </header>
-        <div className="absolute top-4 right-4">
-        <ModeToggle/>
+        <div className="absolute top-4 right-4 flex items-center gap-2">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => navigate("/notifications")}
+          >
+            <Bell className="h-4 w-4" />
+          </Button>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => navigate("/account")}
+            className="gap-2"
+          >
+            <User className="h-4 w-4" />
+            Cuenta
+          </Button>
+          <ModeToggle/>
         </div>
 
         <main className="p-6 md:p-10">
