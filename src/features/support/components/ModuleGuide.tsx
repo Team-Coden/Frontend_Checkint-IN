@@ -432,7 +432,7 @@ export default function ModuleGuide({ moduleId }: ModuleGuideProps) {
   
   <div class="footer">
     <p>Generado el: ${new Date().toLocaleDateString('es-ES')}</p>
-    <p>Sistema CheckInt-IN</p>
+    <p>Sistema Plavet</p>
   </div>
   
   <script class="no-print">

@@ -88,17 +88,16 @@ export const ExcusaDetailsDialog = ({ open, onOpenChange, excuse, onDownload, on
   };
 
   const getEstadoBadge = (estado: string) => {
-    const styles = {
-      "Aprobada": "bg-emerald-50 text-emerald-700 border-emerald-200",
-      "Pendiente": "bg-amber-50 text-amber-700 border-amber-200",
-      "Rechazada": "bg-red-50 text-red-700 border-red-200",
-    };
-    
-    return (
-      <Badge className={styles[estado as keyof typeof styles] || "bg-gray-50 text-gray-700 border-gray-200"}>
-        {estado}
-      </Badge>
-    );
+    switch (estado) {
+      case "Aprobada":
+        return <Badge variant="success">{estado}</Badge>;
+      case "Pendiente":
+        return <Badge variant="orange-subtle">{estado}</Badge>;
+      case "Rechazada":
+        return <Badge variant="danger">{estado}</Badge>;
+      default:
+        return <Badge variant="grey">{estado}</Badge>;
+    }
   };
 
   if (!excuse) return null;

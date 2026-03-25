@@ -32,7 +32,7 @@ export default function ExcusasPage() {
               <FileText className="h-10 w-10" />
               Enviar Excusa
             </h1>
-            <p className="text-muted-foreground text-lg">Sistema de Gestión de Pasantías CHECKINT IN</p>
+            <p className="text-muted-foreground text-lg">Sistema de Gestión de Pasantías Plavet</p>
           </div>
 
           {/* Form Card */}

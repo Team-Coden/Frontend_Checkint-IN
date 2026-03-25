@@ -65,7 +65,7 @@ export default function SupportPage() {
     {
       icon: Mail,
       title: "Email",
-      content: "soporte@checkint.edu",
+      content: "soporte@plavet.edu",
       description: "Respuesta en 24 horas"
     },
     {
@@ -93,7 +93,7 @@ export default function SupportPage() {
               
               <p className="mx-auto mb-8 max-w-2xl text-pretty text-lg leading-relaxed md:text-xl">
                 Encuentra respuestas, tutoriales y soporte técnico para aprovechar al máximo todas las 
-                funcionalidades de CHECKiNT.
+                funcionalidades de Plavet.
               </p>
             </div>
           </div>
@@ -234,7 +234,7 @@ export default function SupportPage() {
               <div className="flex flex-wrap items-center gap-4 text-sm">
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4" />
-                  <span>soporte@checkint.edu</span>
+                  <span>soporte@plavet.edu</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="h-4 w-4" />
@@ -245,7 +245,7 @@ export default function SupportPage() {
                   <span>Centro de Ayuda</span>
                 </div>
               </div>
-              <p className="text-sm">&copy; 2025 CHECKiNT. Todos los derechos reservados.</p>
+              <p className="text-sm">&copy; 2025 Plavet. Todos los derechos reservados.</p>
             </div>
           </div>
         </footer>

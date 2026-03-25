@@ -73,7 +73,7 @@ export default function ReportesPage() {
         <div className="container mx-auto px-4 py-8 max-w-7xl">
           <div className="mb-8 text-center">
             <h1 className="text-4xl font-bold mb-3 text-foreground">Reportes</h1>
-            <p className="text-muted-foreground text-lg">Sistema de Gestión de Pasantías CHECKINT IN</p>
+            <p className="text-muted-foreground text-lg">Sistema de Gestión de Pasantías Plavet</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">

@@ -30,9 +30,9 @@ export function LiveSupport({ isOpen = true, onClose }: LiveSupportProps) {
     {
       id: '1',
       type: 'support',
-      content: '¡Hola! Soy un asistente de CHECKiNT. ¿En qué puedo ayudarte hoy?',
+      content: '¡Hola! Soy un asistente de Plavet. ¿En qué puedo ayudarte hoy?',
       timestamp: new Date(),
-      sender: 'Asistente CHECKiNT'
+      sender: 'Asistente Plavet'
     }
   ])
   const [newMessage, setNewMessage] = useState('')
@@ -59,7 +59,7 @@ export function LiveSupport({ isOpen = true, onClose }: LiveSupportProps) {
         type: 'support',
         content: 'Gracias por tu mensaje. Estoy revisando tu consulta y te responderé en breve.',
         timestamp: new Date(),
-        sender: 'Asistente CHECKiNT'
+        sender: 'Asistente Plavet'
       }
       setMessages(prev => [...prev, supportMessage])
       setIsTyping(false)
@@ -86,7 +86,7 @@ export function LiveSupport({ isOpen = true, onClose }: LiveSupportProps) {
               <CardTitle className="text-lg">Soporte en Vivo</CardTitle>
             </div>
             <div className="flex items-center gap-2">
-              <Badge variant="secondary" className="bg-green-500 text-white">
+              <Badge variant="success">
                 En línea
               </Badge>
               {onClose && (

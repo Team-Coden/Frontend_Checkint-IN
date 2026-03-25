@@ -276,23 +276,11 @@ export default function PlazasPage() {
   const getEstadoBadge = (estado: string) => {
     switch (estado) {
       case "Activa":
-        return (
-          <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 border-emerald-200">
-            Activa
-          </Badge>
-        );
+        return <Badge variant="success">Activa</Badge>;
       case "Ocupada":
-        return (
-          <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100 border-blue-200">
-            Ocupada
-          </Badge>
-        );
+        return <Badge variant="slate-subtle">Ocupada</Badge>;
       case "Inhabilitada":
-        return (
-          <Badge className="bg-gray-100 text-gray-700 hover:bg-gray-100 border-gray-200">
-            Inhabilitada
-          </Badge>
-        );
+        return <Badge variant="grey">Inhabilitada</Badge>;
       default:
         return <Badge variant="outline">{estado}</Badge>;
     }

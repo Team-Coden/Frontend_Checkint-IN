@@ -20,29 +20,13 @@ export function ViewCenterDialog({ open, onOpenChange, centro }: ViewCenterDialo
   const getEstadoBadge = (status: string) => {
     switch (status) {
       case "active":
-        return (
-          <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 border-emerald-200">
-            Activo
-          </Badge>
-        );
+        return <Badge variant="success">Activo</Badge>;
       case "pending":
-        return (
-          <Badge className="bg-amber-100 text-amber-700 hover:bg-amber-100 border-amber-200">
-            Pendiente
-          </Badge>
-        );
+        return <Badge variant="orange-subtle">Pendiente</Badge>;
       case "rejected":
-        return (
-          <Badge className="bg-rose-100 text-rose-700 hover:bg-rose-100 border-rose-200">
-            Rechazado
-          </Badge>
-        );
+        return <Badge variant="danger">Rechazado</Badge>;
       case "deleted":
-        return (
-          <Badge className="bg-gray-100 text-gray-700 hover:bg-gray-100 border-gray-200">
-            Eliminado
-          </Badge>
-        );
+        return <Badge variant="grey">Eliminado</Badge>;
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
@@ -94,13 +78,9 @@ export function ViewCenterDialog({ open, onOpenChange, centro }: ViewCenterDialo
                 <label className="text-sm font-medium text-muted-foreground">Validación</label>
                 <div className="mt-1">
                   {centro.validated ? (
-                    <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 border-emerald-200">
-                      Validado
-                    </Badge>
+                    <Badge variant="success">Validado</Badge>
                   ) : (
-                    <Badge className="bg-amber-100 text-amber-700 hover:bg-amber-100 border-amber-200">
-                      No Validado
-                    </Badge>
+                    <Badge variant="orange-subtle">No Validado</Badge>
                   )}
                 </div>
               </div>

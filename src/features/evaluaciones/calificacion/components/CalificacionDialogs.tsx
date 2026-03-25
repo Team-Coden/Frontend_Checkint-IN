@@ -13,13 +13,17 @@ import { CalificacionTableRows } from "./CalificacionTableRows";
 const getNotaBadge = (notaFinal: string) => {
   const nota = parseFloat(notaFinal || '0');
   if (nota >= 90) {
-    return <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 border-emerald-200">Excelente</Badge>;
+    // Excelente → golden-orange-subtle
+    return <Badge className="[--badge-bg:oklch(95.01%_0.047_80.81)] [--badge-fg:oklch(40.83%_0.087_72.86)] [--badge-border:oklch(90.49%_0.092_81.19)] bg-[var(--badge-bg)] text-[var(--badge-fg)] border border-[var(--badge-border)]">Excelente</Badge>;
   } else if (nota >= 80) {
-    return <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100 border-blue-200">Muy Bueno</Badge>;
+    // Muy bueno → blue-slate-subtle
+    return <Badge className="[--badge-bg:oklch(92.23%_0.008_241.67)] [--badge-fg:oklch(41.61%_0.026_241.93)] [--badge-border:oklch(84.35%_0.014_240.99)] bg-[var(--badge-bg)] text-[var(--badge-fg)] border border-[var(--badge-border)]">Muy Bueno</Badge>;
   } else if (nota >= 70) {
-    return <Badge className="bg-green-100 text-green-700 hover:bg-green-100 border-green-200">Aprobado</Badge>;
+    // Aprobado → golden-orange-200 toned
+    return <Badge className="[--badge-bg:oklch(90.49%_0.092_81.19)] [--badge-fg:oklch(54.11%_0.117_70.57)] [--badge-border:oklch(86.11%_0.131_79.28)] bg-[var(--badge-bg)] text-[var(--badge-fg)] border border-[var(--badge-border)]">Aprobado</Badge>;
   } else {
-    return <Badge className="bg-red-100 text-red-700 hover:bg-red-100 border-red-200">Reprobado</Badge>;
+    // Reprobado → scarlet-subtle
+    return <Badge className="[--badge-bg:oklch(89.13%_0.058_10.39)] [--badge-fg:oklch(42.99%_0.175_25.91)] [--badge-border:oklch(79.14%_0.123_12.67)] bg-[var(--badge-bg)] text-[var(--badge-fg)] border border-[var(--badge-border)]">Reprobado</Badge>;
   }
 };
 

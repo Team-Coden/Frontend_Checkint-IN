@@ -150,7 +150,7 @@ export default function NavigationGuide() {
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold text-foreground">Guía Rápida de Navegación</h2>
         <p className="text-muted-foreground">
-          Acceso rápido a todas las funciones del sistema CHECKiNT
+          Acceso rápido a todas las funciones del sistema Plavet
         </p>
       </div>
 

@@ -94,7 +94,7 @@ const upcomingEvents = [
 
 export default function DashboardPage() {
   useTour('tutorial_visto', [
-    { element: '#tour-welcome', popover: { title: 'Bienvenido', description: 'Este es el Panel de Control principal de CHECKiNT.', side: "bottom", align: 'start' }},
+    { element: '#tour-welcome', popover: { title: 'Bienvenido', description: 'Este es el Panel de Control principal de Plavet.', side: "bottom", align: 'start' }},
     { element: '#tour-kpis', popover: { title: 'Métricas Clave', description: 'Aquí puedes ver un resumen rápido de estudiantes, centros y pasantías.', side: "right", align: 'start' }},
     { element: '#tour-chart', popover: { title: 'Tendencia de Crecimiento', description: 'Gráfico interactivo de la evolución mensual de indicadores.', side: "left", align: 'start' }},
     { element: '#tour-activity', popover: { title: 'Actividad Reciente', description: 'Últimas acciones registradas en el sistema.', side: "top", align: 'start' }},
@@ -110,7 +110,7 @@ export default function DashboardPage() {
             Bienvenido al Panel de Control
           </h1>
           <p className="text-lg text-foreground mt-2">
-            Visualiza el rendimiento y la actividad clave de Checkint-IN de un vistazo.
+            Visualiza el rendimiento y la actividad clave de Plavet de un vistazo.
           </p>
         </div>
         

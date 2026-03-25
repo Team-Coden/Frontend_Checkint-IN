@@ -59,7 +59,7 @@ export function VinculadorTable({
               <TableCell>
                 <Badge
                   variant={
-                    vinculador.estado === "activo" ? "default" : "secondary"
+                    vinculador.estado === "activo" ? "success" : "danger"
                   }
                 >
                   {vinculador.estado === "activo" ? "Activo" : "Inactivo"}

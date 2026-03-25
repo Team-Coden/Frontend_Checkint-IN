@@ -42,11 +42,12 @@ export function LoginForm({
           <form className="p-6 md:p-8" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
+                <img src="/images/Logo_Plavet_final-removebg-preview (1).png" alt="Plavet Logo" className="h-12 mb-4 object-contain" />
                 <h1 className="text-2xl font-bold">
-                  Bienvenido a CHECK<span className="text-primary">iNT</span>
+                  Bienvenido a Pla<span className="text-primary">vet</span>
                 </h1>
-                <p className="text-balance text-zinc-500 dark:text-zinc-400">
-                  Sistema de Gestión de Pasantías
+                <p className="text-balance text-muted-foreground">
+                  Sistema de Gestión de Pasantías y Empleabilidad
                 </p>
               </div>
               <div id="cedula-group" className="grid gap-2">
@@ -84,17 +85,16 @@ export function LoginForm({
               
             </div>
           </form>
-          <div className="relative hidden bg-zinc-100 md:block dark:bg-zinc-800">
+          <div className="mt-auto">
             <img
-              src="/images/image.png"
-              alt="CHECKiNT - Sistema de Gestión de Pasantías"
-              className="absolute inset-0 h-full w-full object-cover"
+              src="/images/Salesianos%20logo.png"
+              alt="Plavet - Sistema de Gestión de Pasantías"
+              className="max-h-[60%] w-full object-cover"
             />
-            <div className="absolute inset-0 bg-linear-to-br from-black/40 via-transparent to-transparent"></div>
           </div>
         </CardContent>
       </Card>
-      <div className="text-balance text-center text-xs text-zinc-500 [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-zinc-900 dark:text-zinc-400 dark:hover:[&_a]:text-zinc-50">
+      <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-foreground">
         By clicking continue, you agree to our <a href="#">Terms of Service</a>{""}
         and <a href="#">Privacy Policy</a>.
       </div>

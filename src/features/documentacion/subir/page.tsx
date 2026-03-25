@@ -134,7 +134,7 @@ export default function SubirDocumentosPage() {
             </div>
             <div>
               <h1 className="text-3xl font-bold tracking-tight">Subir Documentos</h1>
-              <p className="text-muted-foreground">Sube los documentos y explora el portal del tutor de CheckInt</p>
+              <p className="text-muted-foreground">Sube los documentos y explora el portal del tutor de Plavet</p>
             </div>
           </div>
         </div>
@@ -268,7 +268,7 @@ export default function SubirDocumentosPage() {
                   ¡Selecciona un taller y un estudiante para comenzar!
                 </p>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Sube los documentos y explora el portal del tutor de CheckInt
+                  Sube los documentos y explora el portal del tutor de Plavet
                 </p>
               </div>
             )}

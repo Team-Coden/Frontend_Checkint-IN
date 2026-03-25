@@ -59,7 +59,7 @@ export function SupervisorTable({
               <TableCell>
                 <Badge
                   variant={
-                    supervisor.estado === "activo" ? "default" : "secondary"
+                    supervisor.estado === "activo" ? "success" : "danger"
                   }
                 >
                   {supervisor.estado === "activo" ? "Activo" : "Inactivo"}

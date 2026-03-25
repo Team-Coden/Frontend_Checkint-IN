@@ -31,23 +31,11 @@ export const EstudianteTableRow = ({
   const getEstadoBadge = (estado: string) => {
     switch (estado) {
       case "Activo":
-        return (
-          <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 border-emerald-200">
-            Activo
-          </Badge>
-        );
+        return <Badge variant="success">Activo</Badge>;
       case "Inactivo":
-        return (
-          <Badge className="bg-gray-100 text-gray-700 hover:bg-gray-100 border-gray-200">
-            Inactivo
-          </Badge>
-        );
+        return <Badge variant="grey">Inactivo</Badge>;
       case "Suspendido":
-        return (
-          <Badge className="bg-amber-100 text-amber-700 hover:bg-amber-100 border-amber-200">
-            Suspendido
-          </Badge>
-        );
+        return <Badge variant="orange-subtle">Suspendido</Badge>;
       default:
         return <Badge variant="outline">{estado}</Badge>;
     }

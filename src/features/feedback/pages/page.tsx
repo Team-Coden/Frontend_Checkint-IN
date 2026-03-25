@@ -88,7 +88,7 @@ export default function FeedbackPage() {
       replies: [
         {
           id: 'r4',
-          author: 'Equipo CHECKiNT',
+          author: 'Equipo Plavet',
           message: '¡Nos alegra saber que te gusta la plataforma! Seguimos trabajando para mejorarla.',
           date: new Date('2024-03-09')
         }
@@ -157,7 +157,7 @@ export default function FeedbackPage() {
               
               <p className="mx-auto mb-8 max-w-2xl text-pretty text-lg leading-relaxed md:text-xl">
                 Tu opinión nos ayuda a mejorar. Comparte tus ideas, reporta problemas o sugiere mejoras 
-                para hacer CHECKiNT aún mejor.
+                para hacer Plavet aún mejor.
               </p>
             </div>
           </div>
