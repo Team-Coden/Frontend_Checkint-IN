@@ -465,7 +465,9 @@ export default function InicioPage() {
                 entre educación y trabajo desde 2025.
               </p>
               <div className="flex gap-4">
-                <Button size="sm" variant="outline">Instagram</Button>
+                <a href="https://www.instagram.com/ipisasdb?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer">
+                  <Button size="sm" variant="outline">Instagram</Button>
+                </a>
               </div>
             </div>
           </div>
