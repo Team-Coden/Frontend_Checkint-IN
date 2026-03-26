@@ -1,62 +1,101 @@
+/**
+ * ReplyModal.tsx
+ * 
+ * Modal (ventana emergente) que se abre cuando el usuario presiona "Responder" en un feedback.
+ * Muestra:
+ *   1. El feedback original (título, autor, descripción)
+ *   2. Las respuestas anteriores que ya existen
+ *   3. Un campo de texto para escribir una nueva respuesta
+ *   4. Botones de "Cancelar" y "Enviar Respuesta"
+ */
+
+// Importaciones
 import { Button } from "../../../shared/components/ui/button"
 import {
-  Send,
-  X,
-  MessageSquare,
-  User,
+  Send,           // Icono de enviar
+  X,              // Icono de cerrar (X)
+  MessageSquare,  // Icono de mensaje
+  User,           // Icono de usuario (avatar)
 } from "lucide-react"
 import { useState } from "react"
 
+// -------- TIPOS DE DATOS --------
+
+/** Estructura de una respuesta individual */
 interface Reply {
-  id: string
-  author: string
-  message: string
-  date: Date
+  id: string       // ID único de la respuesta
+  author: string   // Nombre del autor
+  message: string  // Texto de la respuesta
+  date: Date       // Fecha de la respuesta
 }
 
+/** Estructura del feedback al que se está respondiendo */
 interface Feedback {
-  id: string
-  title: string
-  description: string
-  category: string
-  author: string
-  date: Date
-  status: string
-  votes: number
-  replies: Reply[]
+  id: string          // ID único del feedback
+  title: string       // Título del feedback
+  description: string // Descripción del feedback
+  category: string    // Categoría del feedback
+  author: string      // Autor del feedback
+  date: Date          // Fecha del feedback
+  status: string      // Estado del feedback
+  votes: number       // Votos del feedback
+  replies: Reply[]    // Lista de respuestas existentes
 }
 
+/**
+ * Props que recibe este componente:
+ * - feedback: el feedback al que se va a responder (null si el modal está cerrado)
+ * - onClose: función para cerrar el modal
+ * - onSubmit: función que se llama al enviar la respuesta (recibe el ID del feedback y el texto)
+ */
 interface ReplyModalProps {
-  feedback: Feedback | null
+  feedback: Feedback | null   // null = modal cerrado
   onClose: () => void
   onSubmit: (feedbackId: string, reply: string) => void
 }
 
 export function ReplyModal({ feedback, onClose, onSubmit }: ReplyModalProps) {
+  // Estado para el texto que el usuario escribe en el campo de respuesta
   const [replyText, setReplyText] = useState('')
+
+  // Estado para controlar si se está enviando (deshabilita botones)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  // Si no hay feedback seleccionado, no se renderiza nada (modal cerrado)
   if (!feedback) return null
 
+  /**
+   * Función que se ejecuta al enviar la respuesta.
+   * 1. Valida que el texto no esté vacío
+   * 2. Llama a onSubmit para guardar la respuesta
+   * 3. Limpia el campo de texto
+   * 4. Cierra el modal
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!replyText.trim()) return
+    if (!replyText.trim()) return  // No enviar si está vacío
 
     setIsSubmitting(true)
     try {
-      await onSubmit(feedback.id, replyText.trim())
-      setReplyText('')
-      onClose()
+      await onSubmit(feedback.id, replyText.trim())  // Envía la respuesta al componente padre
+      setReplyText('')   // Limpia el campo de texto
+      onClose()          // Cierra el modal
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false)  // Siempre desactiva el estado de envío
     }
   }
 
+  // -------- INTERFAZ VISUAL (JSX) --------
   return (
+    // Fondo oscuro semi-transparente que cubre toda la pantalla
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      
+      {/* Contenedor del modal (caja blanca centrada) */}
       <div className="bg-background rounded-lg shadow-xl max-w-2xl w-full max-h-[80vh] overflow-hidden">
-        {/* Header */}
+        
+        {/* ======== ENCABEZADO DEL MODAL ======== */}
         <div className="flex items-center justify-between p-6 border-b">
+          {/* Título del feedback y a quién se responde */}
           <div className="flex items-center gap-3">
             <MessageSquare className="h-5 w-5 text-primary" />
             <div>
@@ -66,6 +105,7 @@ export function ReplyModal({ feedback, onClose, onSubmit }: ReplyModalProps) {
               </p>
             </div>
           </div>
+          {/* Botón X para cerrar el modal */}
           <Button
             variant="ghost"
             size="sm"
@@ -76,15 +116,19 @@ export function ReplyModal({ feedback, onClose, onSubmit }: ReplyModalProps) {
           </Button>
         </div>
 
+        {/* ======== CUERPO DEL MODAL ======== */}
         <div className="flex flex-col h-[60vh]">
-          {/* Feedback Original */}
+          
+          {/* ---- Feedback Original (el mensaje al que se responde) ---- */}
           <div className="p-6 border-b bg-muted/30">
             <div className="flex items-start gap-3">
+              {/* Avatar del autor */}
               <div className="shrink-0">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                   <User className="h-4 w-4 text-primary" />
                 </div>
               </div>
+              {/* Contenido del feedback original */}
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="font-medium">{feedback.author}</span>
@@ -97,26 +141,30 @@ export function ReplyModal({ feedback, onClose, onSubmit }: ReplyModalProps) {
             </div>
           </div>
 
-          {/* Respuestas Anteriores */}
+          {/* ---- Respuestas Anteriores (lista scrolleable) ---- */}
           <div className="flex-1 overflow-y-auto p-6">
             <h4 className="text-sm font-medium mb-4 text-muted-foreground">
               Respuestas anteriores ({feedback.replies.length})
             </h4>
             
+            {/* Si no hay respuestas, muestra un mensaje vacío */}
             {feedback.replies.length === 0 ? (
               <div className="text-center py-8 text-muted-foreground">
                 <MessageSquare className="h-12 w-12 mx-auto mb-3 opacity-50" />
                 <p className="text-sm">No hay respuestas todavía</p>
               </div>
             ) : (
+              // Si hay respuestas, las muestra una por una
               <div className="space-y-4">
                 {feedback.replies.map((reply) => (
                   <div key={reply.id} className="flex items-start gap-3">
+                    {/* Avatar de quien respondió */}
                     <div className="shrink-0">
                       <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
                         <User className="h-4 w-4" />
                       </div>
                     </div>
+                    {/* Contenido de la respuesta */}
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="font-medium">{reply.author}</span>
@@ -132,9 +180,10 @@ export function ReplyModal({ feedback, onClose, onSubmit }: ReplyModalProps) {
             )}
           </div>
 
-          {/* Formulario de Respuesta */}
+          {/* ---- Formulario para Escribir una Nueva Respuesta ---- */}
           <div className="p-6 border-t">
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Campo de texto para la respuesta */}
               <div>
                 <label className="block text-sm font-medium mb-2">
                   Tu respuesta
@@ -149,7 +198,9 @@ export function ReplyModal({ feedback, onClose, onSubmit }: ReplyModalProps) {
                 />
               </div>
               
+              {/* Botones de Cancelar y Enviar */}
               <div className="flex justify-end gap-2">
+                {/* Botón Cancelar - cierra el modal sin enviar */}
                 <Button
                   type="button"
                   variant="outline"
@@ -158,6 +209,7 @@ export function ReplyModal({ feedback, onClose, onSubmit }: ReplyModalProps) {
                 >
                   Cancelar
                 </Button>
+                {/* Botón Enviar - envía la respuesta */}
                 <Button
                   type="submit"
                   disabled={!replyText.trim() || isSubmitting}
